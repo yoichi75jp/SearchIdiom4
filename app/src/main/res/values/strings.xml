@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">四字熟語探し</string>
+    <string name="history_title">履歴</string>
 
     <string name="search_title">見付けたい四字熟語に含まれる文字を入力してください</string>
     <string name="search_hint">検索文字入力</string>
@@ -14,5 +15,16 @@
     <string name="switch_partial">部分一致</string>
     <string name="switch_backward">後方一致</string>
 
-    <string name="search_count">%1件</string>
+    <string name="search_count">%$d1 件</string>
+
+    <!--メニュータイトル-->
+    <string name="menu_history">履歴</string>
+    <string name="menu_close">終了</string>
+
+    <!--メイン画面で戻るボタンを押下したときのメッセージ-->
+    <string name="final_title">終了メニュー</string>
+    <string name="final_message">アプリケーションを終了しますか？</string>
+    <string name="final_ok">終了</string>
+    <string name="final_cancel">キャンセル</string>
+
 </resources>

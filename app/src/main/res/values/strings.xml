@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">四字熟語探し</string>
+
+    <string name="search_title">検索文字</string>
+    <string name="search_hint">入力してください</string>
+
+    <string-array name="match_pattern">
+        <item>前方一致</item>
+        <item>部分一致</item>
+        <item>後方一致</item>
+    </string-array>
+
+    <string name="switch_forward">前方一致</string>
+    <string name="switch_partial">部分一致</string>
+    <string name="switch_backward">後方一致</string>
+</resources>

@@ -87,10 +87,20 @@ public class MainActivity extends Activity {
             });
             dialog.show();
         }
+        if(id == R.id.favorite)
+        {
+            Intent intent = new Intent(this, FavoriteActivity.class);
+            int requestCode = 1;
+            startActivityForResult(intent, requestCode);
+            //startActivity(intent);
+            // アニメーションの設定
+            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+            return true;
+        }
         if(id == R.id.history)
         {
             Intent intent = new Intent(this, HistoryActivity.class);
-            int requestCode = 4;
+            int requestCode = 2;
             startActivityForResult(intent, requestCode);
             //startActivity(intent);
             // アニメーションの設定

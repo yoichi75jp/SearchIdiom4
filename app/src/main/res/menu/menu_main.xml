@@ -2,17 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_favorite"/>
+
+    <item
         android:id="@+id/history"
         android:icon="@drawable/ic_playlist_add_check_white_24dp"
         android:orderInCategory="200"
         android:showAsAction="ifRoom"
         android:title="@string/menu_history"/>
 
-
     <item
         android:id="@+id/close"
         android:icon="@drawable/ic_close_white_24dp"
-        android:orderInCategory="400"
+        android:orderInCategory="300"
         android:showAsAction="ifRoom"
         android:title="@string/menu_close"/>
 </menu>

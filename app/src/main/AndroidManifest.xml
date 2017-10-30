@@ -31,9 +31,17 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".HistoryActivity"
+        <activity android:name=".FavoriteActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:label="@string/history_title"/>
+            android:label="@string/menu_favorite"/>
+        <activity android:name=".HistoryActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/menu_history"/>
+        <activity android:name=".WebBrowserActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/menu_history"/>
 
         <!--meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

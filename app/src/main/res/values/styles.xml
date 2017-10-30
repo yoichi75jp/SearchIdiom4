@@ -5,4 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- CheckBox -->
+    <style name="HartCheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/check_box</item>
+    </style>
+
 </resources>

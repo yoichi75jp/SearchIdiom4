@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.aufthesis.searchidiom4"
         minSdkVersion 16
@@ -27,3 +28,4 @@ dependencies {
     //implementation 'com.google.firebase:firebase-ads:11.4.2'
     testImplementation 'junit:junit:4.12'
 }
+//apply plugin: 'com.google.gms.google-services'

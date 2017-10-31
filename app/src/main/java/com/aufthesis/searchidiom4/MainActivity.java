@@ -140,32 +140,33 @@ public class MainActivity extends Activity {
         String pattern = m_patternSelectSpinner.getSelectedItem().toString();
         if(pattern.equals(getString(R.string.switch_forward)))
         {
-            sql += "idiom like %"
+            sql += "idiom like '%"
                     + query
-                    + " or "
+                    + "' or "
                     + lang
-                    + " like %"
-                    + query;
+                    + " like '%"
+                    + query
+                    + "'";
         }
         else if(pattern.equals(getString(R.string.switch_partial)))
         {
-            sql += "idiom like %"
+            sql += "idiom like '%"
                     + query
-                    + "% or "
+                    + "%' or "
                     + lang
-                    + " like %"
+                    + " like '%"
                     + query
-                    + "%";
+                    + "%'";
         }
         else if(pattern.equals(getString(R.string.switch_backward)))
         {
-            sql += "idiom like "
+            sql += "idiom like '"
                     + query
-                    + "% or "
+                    + "%' or "
                     + lang
-                    + " like "
+                    + " like '"
                     + query
-                    + "%";
+                    + "%'";
         }
 
         // DBからデータを取得
@@ -173,15 +174,15 @@ public class MainActivity extends Activity {
         if (cursor.moveToFirst()) {
             do {
                 // MyListItemのコンストラクタ呼び出しIdiomのオブジェクト生成)
-                String idomName = cursor.getString(1);
+                String idomName = cursor.getString(0);
                 String idomRead;
                 if(m_isJP)
-                    idomRead = cursor.getString(2);
+                    idomRead = cursor.getString(1);
                 else
-                    idomRead = cursor.getString(3);
-                boolean isFavorite = cursor.getInt(5) == 1;
-                int checkCount = cursor.getInt(6);
-                String checkedDay = cursor.getString(7);
+                    idomRead = cursor.getString(2);
+                boolean isFavorite = cursor.getInt(4) == 1;
+                int checkCount = cursor.getInt(5);
+                String checkedDay = cursor.getString(6);
                 Idiom data = new Idiom(idomName, idomRead, isFavorite, checkCount, checkedDay);
                 m_resultItems.add(data);          // 取得した要素をitemsに追加
             } while (cursor.moveToNext());

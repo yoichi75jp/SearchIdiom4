@@ -7,6 +7,10 @@
     <string name="view_count_test">閲覧回数 : 2回</string>
     <string name="last_view_day_test">last : 2017/10/28</string>
 
+    <!--ListView表示文字列-->
+    <string name="check_count">閲覧回数 : %1$d 回</string>
+    <string name="last_check_day">last : %1$s</string>
+
     <!--MainActivity-->
     <string name="search_title">四字熟語に含まれる文字を入力してください</string>
     <string name="search_hint">検索文字入力</string>
@@ -42,5 +46,9 @@
 
     <!--FavoriteActivity-->
     <string name="favorite_description">お気に入りリストです</string>
+
+
+    <string name="search_description">Webで検索</string>
+    <string name="search_word">%1$s+意味</string>
 
 </resources>

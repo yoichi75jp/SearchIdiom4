@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:descendantFocusability="blocksDescendants">
 
     <!--CheckBox
         android:id="@+id/check_delete"
@@ -78,6 +79,6 @@
         android:padding="2dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        style="@style/HartCheckBox"/>
+        style="@style/HartCheckBox" />
 
 </LinearLayout>

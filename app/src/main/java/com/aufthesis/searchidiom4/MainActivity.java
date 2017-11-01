@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 
@@ -33,8 +34,10 @@ public class MainActivity extends Activity {
     private String m_today;
 
     private Spinner m_patternSelectSpinner;
-    private ListView m_idiomListView;
     private SearchView m_searchView;
+    private ListView m_idiomListView;
+    private TextView m_txtCount;
+
     static public SQLiteDatabase m_db;
     private Context m_context;
 
@@ -42,7 +45,7 @@ public class MainActivity extends Activity {
 
     private List<Idiom> m_resultItems;
 
-    private MyBaseAdapter m_myBaseAdapter;
+    //private MyBaseAdapter m_myBaseAdapter;
 
 
 
@@ -60,17 +63,16 @@ public class MainActivity extends Activity {
         m_db = dbHelper.getDataBase();
         m_resultItems = new ArrayList<>();
 
-        m_myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
-
         m_prefs = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         m_patternSelectSpinner = findViewById(R.id.pattern_select);
+        m_txtCount = findViewById(R.id.txt_hit_count);
+        m_txtCount.setVisibility(View.INVISIBLE);
         m_idiomListView = findViewById(R.id.list_result);
         m_idiomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-               MyBaseAdapter adapter = (MyBaseAdapter)arg0.getItemAtPosition(arg2);
-               final Idiom idiom = (Idiom)adapter.getItem(arg2);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Idiom idiom = m_resultItems.get(position);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
                 builder.setTitle("意味を調べる");
@@ -118,27 +120,20 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
-
-
-        m_idiomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            //@SuppressWarnings("unchecked")
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-            }
-        });
     }
 
     private void searchIdiom(String query)
     {
         //ArrayAdapterに対してListViewのリスト(items)の更新
         m_resultItems.clear();
+        m_txtCount.setVisibility(View.INVISIBLE);
+        if(query.equals("")) query = "@@@";     //検索結果が0件になるように適当な文字列(@@@)を格納
 
         String lang = "\"read-en\"";
         if(m_isJP) lang = "\"read-ja\"";
         String sql = "Select * from CharacterIdiom4 where ";
         String pattern = m_patternSelectSpinner.getSelectedItem().toString();
-        if(pattern.equals(getString(R.string.switch_forward)))
+        if(pattern.equals(getString(R.string.switch_backward)))
         {
             sql += "idiom like '%"
                     + query
@@ -158,7 +153,7 @@ public class MainActivity extends Activity {
                     + query
                     + "%'";
         }
-        else if(pattern.equals(getString(R.string.switch_backward)))
+        else if(pattern.equals(getString(R.string.switch_forward)))
         {
             sql += "idiom like '"
                     + query
@@ -174,22 +169,27 @@ public class MainActivity extends Activity {
         if (cursor.moveToFirst()) {
             do {
                 // MyListItemのコンストラクタ呼び出しIdiomのオブジェクト生成)
-                String idomName = cursor.getString(0);
-                String idomRead;
+                String idiomName = cursor.getString(0);
+                String idiomRead;
                 if(m_isJP)
-                    idomRead = cursor.getString(1);
+                    idiomRead = cursor.getString(1);
                 else
-                    idomRead = cursor.getString(2);
+                    idiomRead = cursor.getString(2);
                 boolean isFavorite = cursor.getInt(4) == 1;
                 int checkCount = cursor.getInt(5);
                 String checkedDay = cursor.getString(6);
-                Idiom data = new Idiom(idomName, idomRead, isFavorite, checkCount, checkedDay);
+                Idiom data = new Idiom(idiomName, idiomRead, isFavorite, checkCount, checkedDay);
                 m_resultItems.add(data);          // 取得した要素をitemsに追加
             } while (cursor.moveToNext());
         }
         cursor.close();
-        m_idiomListView.setAdapter(m_myBaseAdapter);  // ListViewにmyBaseAdapterをセット
-        m_myBaseAdapter.notifyDataSetChanged();   // Viewの更新
+        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
+        m_idiomListView.setAdapter(myBaseAdapter);  // ListViewにmyBaseAdapterをセット
+        myBaseAdapter.notifyDataSetChanged();   // Viewの更新
+
+        m_txtCount.setText(getString(R.string.search_count,m_resultItems.size()));
+        if(m_resultItems.size() > 0)
+            m_txtCount.setVisibility(View.VISIBLE);
     }
 
 
@@ -221,6 +221,7 @@ public class MainActivity extends Activity {
         return list;
     }
 
+    /**/
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -231,6 +232,7 @@ public class MainActivity extends Activity {
             m_searchView.setQuery(query, false);
         }
     }
+    /**/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -47,6 +47,8 @@
     <!--FavoriteActivity-->
     <string name="favorite_description">お気に入りリストです</string>
 
+    <!--WedBrowserActivity-->
+    <string name="look_answer">意味を確認</string>
 
     <string name="search_description">Webで検索</string>
     <string name="search_word">%1$s+意味</string>

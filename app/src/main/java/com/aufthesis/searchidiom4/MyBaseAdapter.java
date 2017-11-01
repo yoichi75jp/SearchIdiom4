@@ -5,6 +5,7 @@ package com.aufthesis.searchidiom4;
  */
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,15 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 
-public class MyBaseAdapter extends BaseAdapter {
+public class MyBaseAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener {
 
     private Context m_context;
     private List<Idiom> m_items;
     private eActivity m_activity;
+
+    private LayoutInflater mInflater;
+    private SparseBooleanArray mCheckBoxStatus;
 
     // 毎回findViewByIdをする事なく、高速化が出来るようするholderクラス
     private class ViewHolder {
@@ -44,6 +47,9 @@ public class MyBaseAdapter extends BaseAdapter {
         this.m_context = context;
         this.m_items = items;
         this.m_activity = activity;
+
+        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mCheckBoxStatus = new SparseBooleanArray(items.size());
     }
 
     // Listの要素数を返す
@@ -66,7 +72,7 @@ public class MyBaseAdapter extends BaseAdapter {
 
     // 新しいデータが表示されるタイミングで呼び出される
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         View view = convertView;
         ViewHolder holder;
@@ -78,13 +84,11 @@ public class MyBaseAdapter extends BaseAdapter {
         switch (m_activity)
         {
             case Main:
-                activityId = R.layout.activity_main;
+            case Favorite:
+                activityId = R.layout.row_idiom_listview;
                 break;
             case History:
-                activityId = R.layout.activity_history;
-                break;
-            case Favorite:
-                activityId = R.layout.activity_favorite;
+                activityId = R.layout.row_history_listview;
                 break;
         }
 
@@ -100,26 +104,25 @@ public class MyBaseAdapter extends BaseAdapter {
             TextView txtCheckCount = view.findViewById(R.id.view_count);
             TextView txtCheckedDay = view.findViewById(R.id.last_view_day);
             CheckBox chkFavorite  = view.findViewById(R.id.check_favorite);
+            /*
+            chkFavorite.setChecked(idiomData.isFavorite());
+            chkFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isChecked = ((CheckBox) v).isChecked();
+                    idiomData.setFavorite(isChecked);
+                }
+            });/**/
+            /*
             chkFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    String isFavorite = isChecked ? "1" : "0";
                     idiomData.setFavorite(isChecked);
-
-                    boolean isJP = Locale.getDefault().toString().equals(Locale.JAPAN.toString());
-                    String lang = "\"read-en\"";
-                    if(isJP) lang = "\"read-ja\"";
-                    String sql = "update CharacterIdiom4 set is_favorite = "
-                            + isFavorite
-                            + " where idiom = "
-                            + idiomData.getName()
-                            + " and "
-                            + lang
-                            + " = "
-                            + idiomData.getRead();
-                    MainActivity.m_db.execSQL(sql);
                 }
-            });
+            });**/
+            //chkFavorite.setFocusable(false);
+            //chkFavorite.setFocusableInTouchMode(false);
+
             CheckBox chkDelete = null;
             if(m_activity == eActivity.History)
                 chkDelete = view.findViewById(R.id.check_delete);
@@ -138,6 +141,16 @@ public class MyBaseAdapter extends BaseAdapter {
             // 初めて表示されるときにつけておいたtagを元にviewを取得する
             holder = (ViewHolder) view.getTag();
         }
+
+        // チェックボックスの状態のセット
+//        holder.m_chkFavorite.setChecked(idiomData.isFavorite());
+//        if(holder.m_chkDelete != null)
+//            holder.m_chkDelete.setChecked(idiomData.isTryingToDelete());
+
+        holder.m_chkFavorite.setTag(position);
+        holder.m_chkFavorite.setChecked(mCheckBoxStatus.get(position, false));
+        holder.m_chkFavorite.setOnCheckedChangeListener(this);
+        holder.m_chkFavorite.setChecked(isChecked(position));
 
         // 取得した各データを各TextViewにセット
         holder.m_txtIdiomName.setText(idiomData.getName());
@@ -159,6 +172,22 @@ public class MyBaseAdapter extends BaseAdapter {
             holder.m_chkDelete.setChecked(false);
 
         return view;
+    }
 
+    private boolean isChecked(int position){
+        return mCheckBoxStatus.get(position, false);
+    }
+
+    private void setChecked(int position,boolean isChecked){
+        mCheckBoxStatus.put(position, isChecked);
+        notifyDataSetChanged();
+    }
+
+    public void toggle(int position) {
+        setChecked(position, !isChecked(position));
+    }
+
+    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+        mCheckBoxStatus.put((Integer)buttonView.getTag(),isChecked);
     }
 }

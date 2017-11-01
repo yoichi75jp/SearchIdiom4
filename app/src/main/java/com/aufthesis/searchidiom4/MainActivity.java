@@ -32,6 +32,7 @@ import java.util.Locale;
 public class MainActivity extends Activity {
 
     private String m_today;
+    private String m_query = "";
 
     private Spinner m_patternSelectSpinner;
     private SearchView m_searchView;
@@ -43,6 +44,7 @@ public class MainActivity extends Activity {
 
     private SharedPreferences m_prefs;
 
+    MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
 
     //private MyBaseAdapter m_myBaseAdapter;
@@ -65,7 +67,6 @@ public class MainActivity extends Activity {
 
         m_prefs = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
-        m_patternSelectSpinner = findViewById(R.id.pattern_select);
         m_txtCount = findViewById(R.id.txt_hit_count);
         m_txtCount.setVisibility(View.INVISIBLE);
         m_idiomListView = findViewById(R.id.list_result);
@@ -84,7 +85,7 @@ public class MainActivity extends Activity {
                         idiom.Checked(m_today);
                         Intent intent = new Intent(m_context, WebBrowserActivity.class);
                         intent.putExtra(SearchManager.QUERY, getString(R.string.search_word, idiom.getName()));
-                        startActivity(intent);
+                        startActivityForResult(intent,1);
                     }
                 });
                 builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
@@ -111,13 +112,27 @@ public class MainActivity extends Activity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // queryを用いて処理を行う
-                return false;
+                m_searchView.clearFocus();
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 searchIdiom(s);
+                m_query = s;
                 return false;
+            }
+        });
+
+        m_patternSelectSpinner = findViewById(R.id.pattern_select);
+        m_patternSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                searchIdiom(m_query);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -183,9 +198,9 @@ public class MainActivity extends Activity {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
-        m_idiomListView.setAdapter(myBaseAdapter);  // ListViewにmyBaseAdapterをセット
-        myBaseAdapter.notifyDataSetChanged();   // Viewの更新
+        m_myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
+        m_idiomListView.setAdapter(m_myBaseAdapter);  // ListViewにmyBaseAdapterをセット
+        m_myBaseAdapter.notifyDataSetChanged();   // Viewの更新
 
         m_txtCount.setText(getString(R.string.search_count,m_resultItems.size()));
         if(m_resultItems.size() > 0)
@@ -290,4 +305,20 @@ public class MainActivity extends Activity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                m_myBaseAdapter.notifyDataSetChanged();   // Viewの更新
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:break;
+        }
+    }
 }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MyBaseAdapter extends BaseAdapter implements CompoundButton.OnCheckedChangeListener {
+public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCheckedChangeListener {
 
     private Context m_context;
     private List<Idiom> m_items;
@@ -104,24 +104,6 @@ public class MyBaseAdapter extends BaseAdapter implements CompoundButton.OnCheck
             TextView txtCheckCount = view.findViewById(R.id.view_count);
             TextView txtCheckedDay = view.findViewById(R.id.last_view_day);
             CheckBox chkFavorite  = view.findViewById(R.id.check_favorite);
-            /*
-            chkFavorite.setChecked(idiomData.isFavorite());
-            chkFavorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean isChecked = ((CheckBox) v).isChecked();
-                    idiomData.setFavorite(isChecked);
-                }
-            });/**/
-            /*
-            chkFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    idiomData.setFavorite(isChecked);
-                }
-            });**/
-            //chkFavorite.setFocusable(false);
-            //chkFavorite.setFocusableInTouchMode(false);
 
             CheckBox chkDelete = null;
             if(m_activity == eActivity.History)
@@ -142,15 +124,15 @@ public class MyBaseAdapter extends BaseAdapter implements CompoundButton.OnCheck
             holder = (ViewHolder) view.getTag();
         }
 
-        // チェックボックスの状態のセット
-//        holder.m_chkFavorite.setChecked(idiomData.isFavorite());
-//        if(holder.m_chkDelete != null)
-//            holder.m_chkDelete.setChecked(idiomData.isTryingToDelete());
-
         holder.m_chkFavorite.setTag(position);
-        holder.m_chkFavorite.setChecked(mCheckBoxStatus.get(position, false));
-        holder.m_chkFavorite.setOnCheckedChangeListener(this);
-        holder.m_chkFavorite.setChecked(isChecked(position));
+        holder.m_chkFavorite.setChecked(idiomData.isFavorite());
+        holder.m_chkFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = ((CheckBox) v).isChecked();
+                idiomData.setFavorite(isChecked);
+            }
+        });
 
         // 取得した各データを各TextViewにセット
         holder.m_txtIdiomName.setText(idiomData.getName());

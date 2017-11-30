@@ -42,7 +42,8 @@ public class MainActivity extends Activity {
     static public SQLiteDatabase m_db;
     private Context m_context;
 
-    private SharedPreferences m_prefs;
+    static public SharedPreferences m_prefs;
+    static public final String DEMILITER = "/";
 
     MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
@@ -209,7 +210,7 @@ public class MainActivity extends Activity {
 
 
     // 設定値 ArrayList<String> を保存（Context は Activity や Application や Service）
-    private void saveList(String key, ArrayList<String> list) {
+    static public void saveList(String key, ArrayList<String> list) {
         JSONArray jsonAry = new JSONArray();
         for(int i = 0; i < list.size(); i++) {
             jsonAry.put(list.get(i));
@@ -220,7 +221,7 @@ public class MainActivity extends Activity {
     }
 
     // 設定値 ArrayList<String> を取得（Context は Activity や Application や Service）
-    private ArrayList<String> loadList(String key) {
+    static public ArrayList<String> loadList(String key) {
         ArrayList<String> list = new ArrayList<>();
         String strJson = m_prefs.getString(key, ""); // 第２引数はkeyが存在しない時に返す初期値
         if(!strJson.equals("")) {

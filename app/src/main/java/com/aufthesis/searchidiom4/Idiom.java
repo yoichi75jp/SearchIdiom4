@@ -13,6 +13,7 @@ public class Idiom
     private boolean m_aboutToDelete = false;
     private int m_checkCount = 0;
     private String m_lastCheckDay;
+    private boolean m_isEntry = false;
 
     Idiom(String name, String read, boolean isFavorite, int count, String checkedDay)
     {
@@ -22,6 +23,7 @@ public class Idiom
         m_isFavorite = isFavorite;
         m_checkCount = count;
         m_lastCheckDay = checkedDay;
+        this.createID();
     }
 
     public String getName(){return m_idiomName;}
@@ -41,6 +43,7 @@ public class Idiom
         m_lastCheckDay = today;
 
 
+        this.createID();
     }
 
     public void setAboutToDelete(boolean isDelete){m_aboutToDelete = isDelete;}
@@ -50,19 +53,23 @@ public class Idiom
     {
         StringBuilder stringuBuilder = new StringBuilder();
         stringuBuilder.append(m_idiomName);
-        stringuBuilder.append(MainActivity.DEMILITER);
+        stringuBuilder.append(MainActivity.DELIMITER);
         stringuBuilder.append(m_idiomRead);
-        stringuBuilder.append(MainActivity.DEMILITER);
+        stringuBuilder.append(MainActivity.DELIMITER);
         stringuBuilder.append(m_isFavorite);
-        stringuBuilder.append(MainActivity.DEMILITER);
+        stringuBuilder.append(MainActivity.DELIMITER);
         stringuBuilder.append(m_checkCount);
-        stringuBuilder.append(MainActivity.DEMILITER);
+        stringuBuilder.append(MainActivity.DELIMITER);
         stringuBuilder.append(m_lastCheckDay);
         m_ID = stringuBuilder.toString();
     }
 
-    private boolean isMyID(String id)
+    public boolean isMyID(String id)
     {
-        return false;
+        String[] split  = m_ID.split(MainActivity.DELIMITER);
+        return split.length >= 2 && split[0].equals(m_idiomName) && split[1].equals(m_idiomRead);
     }
+
+    public void setEntry(boolean entry){m_isEntry = entry;}
+    public boolean isEntry(){return m_isEntry;}
 }

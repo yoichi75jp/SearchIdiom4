@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
     private Context m_context;
 
     static public SharedPreferences m_prefs;
-    static public final String DEMILITER = "/";
+    static public final String DELIMITER = "/";
 
     MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;

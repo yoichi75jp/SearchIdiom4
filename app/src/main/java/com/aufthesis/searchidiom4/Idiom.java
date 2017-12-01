@@ -4,6 +4,8 @@ package com.aufthesis.searchidiom4;
  * Created by a2035210 on 2017/10/31.
  */
 
+import java.util.List;
+
 public class Idiom
 {
     private String m_ID;
@@ -26,6 +28,38 @@ public class Idiom
         this.createID();
     }
 
+    Idiom(String id)
+    {
+        m_ID = "";
+        String[] split  = id.split(MainActivity.DELIMITER);
+        if(split.length == 5)
+        {
+            m_idiomName = split[0];
+            m_idiomRead = split[1];
+            m_isFavorite = split[2].equals("true");
+            m_checkCount = Integer.parseInt(split[3]);
+            m_lastCheckDay = split[4];
+        }
+        this.createID();
+    }
+
+    //Copy Constructor
+    Idiom(Idiom idiom)
+    {
+        m_ID = "";
+        m_idiomName = idiom.getName();
+        m_idiomRead = idiom.getRead();
+        m_isFavorite = idiom.isFavorite();
+        m_checkCount = idiom.getCheckCount();
+        m_lastCheckDay = idiom.getLastCheckedDay();
+        this.createID();
+    }
+
+    public boolean equals(Idiom idiom)
+    {
+        return this.m_idiomName.equals(idiom.getName()) && this.m_idiomRead.equals(idiom.getRead());
+    }
+
     public String getName(){return m_idiomName;}
 
     String getRead(){return m_idiomRead;}
@@ -41,9 +75,11 @@ public class Idiom
     {
         m_checkCount++;
         m_lastCheckDay = today;
-
-
         this.createID();
+        if(MainActivity.m_saveList.size() > 0)
+        {
+            //TODO:ここでIDをListに追加または修正を行う
+        }
     }
 
     public void setAboutToDelete(boolean isDelete){m_aboutToDelete = isDelete;}
@@ -69,6 +105,8 @@ public class Idiom
         String[] split  = m_ID.split(MainActivity.DELIMITER);
         return split.length >= 2 && split[0].equals(m_idiomName) && split[1].equals(m_idiomRead);
     }
+
+    public String getID(){return m_ID;}
 
     public void setEntry(boolean entry){m_isEntry = entry;}
     public boolean isEntry(){return m_isEntry;}

@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
 
     MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
+    static public ArrayList<String> m_saveList;
 
     //private MyBaseAdapter m_myBaseAdapter;
 
@@ -67,6 +68,7 @@ public class MainActivity extends Activity {
         m_resultItems = new ArrayList<>();
 
         m_prefs = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        m_saveList = loadList(getString(R.string.key_save));    //TODO:StringのListではなく、IdiomにしてからList化してもいいかも
 
         m_txtCount = findViewById(R.id.txt_hit_count);
         m_txtCount.setVisibility(View.INVISIBLE);
@@ -322,4 +324,41 @@ public class MainActivity extends Activity {
             default:break;
         }
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        m_saveList = loadList(getString(R.string.key_save));
+        //if (m_adView != null) {
+        //    m_adView.resume();
+        //}
+    }
+
+    @Override
+    public void onPause() {
+        //if (m_adView != null) {
+        //    m_adView.pause();
+        //}
+        saveList(getString((R.string.key_save)), m_saveList);
+        super.onPause();
+        //m_soundPool.release();
+    }
+    @Override
+    protected void onRestart() {
+        m_saveList = loadList(getString(R.string.key_save));
+        super.onRestart();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        //if (m_adView != null) {
+        //    m_adView.destroy();
+        //}
+        saveList(getString((R.string.key_save)), m_saveList);
+        super.onDestroy();
+        setResult(RESULT_OK);
+    }
+
 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">四字熟語探し</string>
     <string name="delimiter">/</string>
+    <string name="key_save">key_save</string>
 
     <!--テスト文字列-->
     <string name="idiom_name_test">情状酌量</string>

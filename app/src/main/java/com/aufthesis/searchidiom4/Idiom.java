@@ -76,10 +76,17 @@ public class Idiom
         m_checkCount++;
         m_lastCheckDay = today;
         this.createID();
-        if(MainActivity.m_saveList.size() > 0)
+
+        for(int i = 0; i < MainActivity.m_saveList.size(); i++)
         {
-            //TODO:ここでIDをListに追加または修正を行う
+            if(this.isMyID(MainActivity.m_saveList.get(i)))
+            {
+                MainActivity.m_saveList.remove(i);
+                break;
+            }
         }
+        MainActivity.m_saveList.add(m_ID);
+
     }
 
     public void setAboutToDelete(boolean isDelete){m_aboutToDelete = isDelete;}

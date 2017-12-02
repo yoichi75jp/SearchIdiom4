@@ -43,11 +43,12 @@ public class MainActivity extends Activity {
     private Context m_context;
 
     static public SharedPreferences m_prefs;
-    static public final String DELIMITER = "/";
+    static public final String DELIMITER = "@";
 
     MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
     static public ArrayList<String> m_saveList;
+    static public ArrayList<Idiom> m_savedIdiomList;
 
     //private MyBaseAdapter m_myBaseAdapter;
 
@@ -68,7 +69,10 @@ public class MainActivity extends Activity {
         m_resultItems = new ArrayList<>();
 
         m_prefs = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
-        m_saveList = loadList(getString(R.string.key_save));    //TODO:StringのListではなく、IdiomにしてからList化してもいいかも
+        m_saveList = loadList(getString(R.string.key_save));
+        m_savedIdiomList = new ArrayList<>();
+        for(int i = 0; i < m_saveList.size(); i++)
+            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
 
         m_txtCount = findViewById(R.id.txt_hit_count);
         m_txtCount.setVisibility(View.INVISIBLE);
@@ -197,6 +201,14 @@ public class MainActivity extends Activity {
                 int checkCount = cursor.getInt(5);
                 String checkedDay = cursor.getString(6);
                 Idiom data = new Idiom(idiomName, idiomRead, isFavorite, checkCount, checkedDay);
+                for(int i = 0; i < m_savedIdiomList.size(); i++)
+                {
+                    if (data.equals(m_savedIdiomList.get(i)))
+                    {
+                        data = m_savedIdiomList.get(i);
+                        break;
+                    }
+                }
                 m_resultItems.add(data);          // 取得した要素をitemsに追加
             } while (cursor.moveToNext());
         }
@@ -330,6 +342,9 @@ public class MainActivity extends Activity {
     {
         super.onResume();
         m_saveList = loadList(getString(R.string.key_save));
+        m_savedIdiomList.clear();
+        for(int i = 0; i < m_saveList.size(); i++)
+            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
         //if (m_adView != null) {
         //    m_adView.resume();
         //}
@@ -347,6 +362,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onRestart() {
         m_saveList = loadList(getString(R.string.key_save));
+        m_savedIdiomList.clear();
+        for(int i = 0; i < m_saveList.size(); i++)
+            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
         super.onRestart();
     }
 

@@ -55,7 +55,7 @@ public class Idiom
         this.createID();
     }
 
-    public boolean equals(Idiom idiom)
+    boolean equals(Idiom idiom)
     {
         return this.m_idiomName.equals(idiom.getName()) && this.m_idiomRead.equals(idiom.getRead());
     }
@@ -107,9 +107,9 @@ public class Idiom
         m_ID = stringuBuilder.toString();
     }
 
-    public boolean isMyID(String id)
+    private boolean isMyID(String id)
     {
-        String[] split  = m_ID.split(MainActivity.DELIMITER);
+        String[] split  = id.split(MainActivity.DELIMITER);
         return split.length >= 2 && split[0].equals(m_idiomName) && split[1].equals(m_idiomRead);
     }
 

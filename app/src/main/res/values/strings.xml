@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">四字熟語探し</string>
+
+    <!--共通-->
     <string name="delimiter">\@</string>
     <string name="key_save">key_save</string>
+    <string name="find_meaning">意味を調べる</string>
+    <string name="confirm_whether_to_check_meaning">この四字熟語の意味を調べますか？</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
 
     <!--テスト文字列-->
     <string name="idiom_name_test">情状酌量</string>
@@ -41,7 +47,7 @@
     <string name="final_cancel">キャンセル</string>
 
     <!--HistoryActivity-->
-    <string name="history_description">意味を調べたことのある四字熟語の履歴です</string>
+    <string name="history_description">意味を調べたことのある四字熟語の履歴</string>
     <string name="check_all">全て選択</string>
     <string name="uncheck_all">全て選択解除</string>
     <string name="delete_history">履歴から削除する</string>

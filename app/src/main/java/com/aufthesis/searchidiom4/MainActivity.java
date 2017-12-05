@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class MainActivity extends Activity {
 
-    private String m_today;
+    static public String m_today;
     private String m_query = "";
 
     private Spinner m_patternSelectSpinner;
@@ -45,14 +45,10 @@ public class MainActivity extends Activity {
     static public SharedPreferences m_prefs;
     static public final String DELIMITER = "@";
 
-    MyBaseAdapter m_myBaseAdapter;
+    private MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
     static public ArrayList<String> m_saveList;
     static public ArrayList<Idiom> m_savedIdiomList;
-
-    //private MyBaseAdapter m_myBaseAdapter;
-
-
 
     private boolean m_isJP = Locale.getDefault().toString().equals(Locale.JAPAN.toString());
 
@@ -83,10 +79,10 @@ public class MainActivity extends Activity {
                 final Idiom idiom = m_resultItems.get(position);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
-                builder.setTitle("意味を調べる");
-                builder.setMessage("この四字熟語の意味を調べますか？");
+                builder.setTitle(getString(R.string.find_meaning));
+                builder.setMessage(getString(R.string.confirm_whether_to_check_meaning));
                 // OKの時の処理
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         idiom.Checked(m_today);
@@ -95,7 +91,7 @@ public class MainActivity extends Activity {
                         startActivityForResult(intent,1);
                     }
                 });
-                builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

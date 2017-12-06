@@ -29,6 +29,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+//TODO:履歴削除ができない
+//TODO:履歴リストが重複する
+//TODO:お気に入りリストが保存されない
+
 public class MainActivity extends Activity {
 
     static public String m_today;
@@ -352,6 +356,8 @@ public class MainActivity extends Activity {
         //    m_adView.pause();
         //}
         saveList(getString((R.string.key_save)), m_saveList);
+        for(int i = 0; i < m_saveList.size(); i++)
+            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
         super.onPause();
         //m_soundPool.release();
     }
@@ -371,6 +377,8 @@ public class MainActivity extends Activity {
         //    m_adView.destroy();
         //}
         saveList(getString((R.string.key_save)), m_saveList);
+        for(int i = 0; i < m_saveList.size(); i++)
+            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
         super.onDestroy();
         setResult(RESULT_OK);
     }

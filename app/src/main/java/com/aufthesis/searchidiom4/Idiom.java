@@ -4,8 +4,6 @@ package com.aufthesis.searchidiom4;
  * Created by a2035210 on 2017/10/31.
  */
 
-import java.util.List;
-
 public class Idiom
 {
     private String m_ID;
@@ -42,7 +40,7 @@ public class Idiom
         }
         this.createID();
     }
-
+    /**
     //Copy Constructor
     Idiom(Idiom idiom)
     {
@@ -54,7 +52,7 @@ public class Idiom
         m_lastCheckDay = idiom.getLastCheckedDay();
         this.createID();
     }
-
+    /**/
     boolean equals(Idiom idiom)
     {
         return this.m_idiomName.equals(idiom.getName()) && this.m_idiomRead.equals(idiom.getRead());
@@ -64,7 +62,12 @@ public class Idiom
 
     String getRead(){return m_idiomRead;}
 
-    void setFavorite(boolean isFavorite){m_isFavorite = isFavorite;}
+    void setFavorite(boolean isFavorite)
+    {
+        m_isFavorite = isFavorite;
+        this.update();
+    }
+
     boolean isFavorite(){return m_isFavorite;}
 
     int getCheckCount(){return m_checkCount;}
@@ -75,8 +78,47 @@ public class Idiom
     {
         m_checkCount++;
         m_lastCheckDay = today;
-        this.createID();
+        setEntry(true);
+        this.update();
 
+    }
+
+    void setAboutToDelete(boolean isDelete){m_aboutToDelete = isDelete;}
+    boolean isTryingToDelete(){return m_aboutToDelete;}
+
+    private void createID()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(m_idiomName);
+        stringBuilder.append(MainActivity.DELIMITER);
+        stringBuilder.append(m_idiomRead);
+        stringBuilder.append(MainActivity.DELIMITER);
+        stringBuilder.append(m_isFavorite);
+        stringBuilder.append(MainActivity.DELIMITER);
+        stringBuilder.append(m_checkCount);
+        stringBuilder.append(MainActivity.DELIMITER);
+        stringBuilder.append(m_lastCheckDay);
+        m_ID = stringBuilder.toString();
+    }
+
+    private boolean isMyID(String id)
+    {
+        String[] split  = id.split(MainActivity.DELIMITER);
+        return split.length >= 2 && split[0].equals(m_idiomName) && split[1].equals(m_idiomRead);
+    }
+
+    //public String getID(){return m_ID;}
+
+    void setEntry(boolean enter)
+    {
+        m_isEntry = enter;
+        if(!enter)  this.update();
+    }
+    boolean isEntry(){return m_isEntry;}
+
+    private void update()
+    {
+        this.createID();
         for(int i = 0; i < MainActivity.m_saveList.size(); i++)
         {
             if(this.isMyID(MainActivity.m_saveList.get(i)))
@@ -86,35 +128,5 @@ public class Idiom
             }
         }
         MainActivity.m_saveList.add(m_ID);
-
     }
-
-    public void setAboutToDelete(boolean isDelete){m_aboutToDelete = isDelete;}
-    public boolean isTryingToDelete(){return m_aboutToDelete;}
-
-    private void createID()
-    {
-        StringBuilder stringuBuilder = new StringBuilder();
-        stringuBuilder.append(m_idiomName);
-        stringuBuilder.append(MainActivity.DELIMITER);
-        stringuBuilder.append(m_idiomRead);
-        stringuBuilder.append(MainActivity.DELIMITER);
-        stringuBuilder.append(m_isFavorite);
-        stringuBuilder.append(MainActivity.DELIMITER);
-        stringuBuilder.append(m_checkCount);
-        stringuBuilder.append(MainActivity.DELIMITER);
-        stringuBuilder.append(m_lastCheckDay);
-        m_ID = stringuBuilder.toString();
-    }
-
-    private boolean isMyID(String id)
-    {
-        String[] split  = id.split(MainActivity.DELIMITER);
-        return split.length >= 2 && split[0].equals(m_idiomName) && split[1].equals(m_idiomRead);
-    }
-
-    public String getID(){return m_ID;}
-
-    public void setEntry(boolean entry){m_isEntry = entry;}
-    public boolean isEntry(){return m_isEntry;}
 }

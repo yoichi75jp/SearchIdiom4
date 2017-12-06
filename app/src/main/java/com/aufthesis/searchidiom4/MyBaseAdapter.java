@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCheckedChangeListener {
@@ -22,7 +23,7 @@ public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCh
     private List<Idiom> m_items;
     private eActivity m_activity;
 
-    private LayoutInflater mInflater;
+    //private LayoutInflater mInflater;
     private SparseBooleanArray mCheckBoxStatus;
 
     // 毎回findViewByIdをする事なく、高速化が出来るようするholderクラス
@@ -48,7 +49,7 @@ public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCh
         this.m_items = items;
         this.m_activity = activity;
 
-        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCheckBoxStatus = new SparseBooleanArray(items.size());
     }
 
@@ -151,7 +152,16 @@ public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCh
         }
         holder.m_chkFavorite.setChecked(idiomData.isFavorite());
         if(m_activity == eActivity.History)
-            holder.m_chkDelete.setChecked(false);
+        {
+            holder.m_chkDelete.setChecked(idiomData.isTryingToDelete());
+            holder.m_chkDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isChecked = ((CheckBox) v).isChecked();
+                    idiomData.setAboutToDelete(isChecked);
+                }
+            });
+        }
 
         return view;
     }
@@ -163,6 +173,11 @@ public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCh
     private void setChecked(int position,boolean isChecked){
         mCheckBoxStatus.put(position, isChecked);
         notifyDataSetChanged();
+    }
+
+    void refreshItemList(List<Idiom> itemList){
+        m_items.clear();
+        m_items = new ArrayList<>(itemList);
     }
 
     public void toggle(int position) {

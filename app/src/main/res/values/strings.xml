@@ -51,6 +51,8 @@
     <string name="check_all">全て選択</string>
     <string name="uncheck_all">全て選択解除</string>
     <string name="delete_history">履歴から削除する</string>
+    <string name="title_delete_history">履歴削除</string>
+    <string name="confirm_whether_to_delete_history">チェックしている履歴を削除しますか？</string>
 
     <!--FavoriteActivity-->
     <string name="favorite_description">お気に入りリストです</string>

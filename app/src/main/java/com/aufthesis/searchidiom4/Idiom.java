@@ -30,13 +30,14 @@ public class Idiom
     {
         m_ID = "";
         String[] split  = id.split(MainActivity.DELIMITER);
-        if(split.length == 5)
+        if(split.length == 4 || split.length == 5)
         {
             m_idiomName = split[0];
             m_idiomRead = split[1];
             m_isFavorite = split[2].equals("true");
             m_checkCount = Integer.parseInt(split[3]);
-            m_lastCheckDay = split[4];
+            if(split.length == 5)
+                m_lastCheckDay = split[4];
         }
         this.createID();
     }
@@ -96,8 +97,11 @@ public class Idiom
         stringBuilder.append(m_isFavorite);
         stringBuilder.append(MainActivity.DELIMITER);
         stringBuilder.append(m_checkCount);
-        stringBuilder.append(MainActivity.DELIMITER);
-        stringBuilder.append(m_lastCheckDay);
+        if(m_lastCheckDay != null)
+        {
+            stringBuilder.append(MainActivity.DELIMITER);
+            stringBuilder.append(m_lastCheckDay);
+        }
         m_ID = stringBuilder.toString();
     }
 

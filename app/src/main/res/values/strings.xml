@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">四字熟語探し</string>
+    <string name="app_name">速攻！四字熟語習得</string>
 
     <!--共通-->
     <string name="delimiter">\@</string>

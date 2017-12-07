@@ -88,4 +88,41 @@ public class FavoriteActivity extends Activity {
             m_favoriteCount.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        //if (m_adView != null) {
+        //    m_adView.resume();
+        //}
+    }
+
+    @Override
+    public void onPause() {
+        //if (m_adView != null) {
+        //    m_adView.pause();
+        //}
+        MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
+        MainActivity.syncData();
+        super.onPause();
+        //m_soundPool.release();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        //if (m_adView != null) {
+        //    m_adView.destroy();
+        //}
+        MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
+        MainActivity.syncData();
+        super.onDestroy();
+        setResult(RESULT_OK);
+    }
+
 }

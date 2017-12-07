@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-//TODO:履歴削除ができない
 
 public class MainActivity extends Activity {
 
@@ -323,9 +322,8 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
-                m_myBaseAdapter.notifyDataSetChanged();   // Viewの更新
-                break;
             case 2:
+                searchIdiom(m_searchView.getQuery().toString());
                 break;
             case 3:
                 break;
@@ -340,9 +338,7 @@ public class MainActivity extends Activity {
     {
         super.onResume();
         m_saveList = loadList(getString(R.string.key_save));
-        m_savedIdiomList.clear();
-        for(int i = 0; i < m_saveList.size(); i++)
-            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
+        syncData();
         //if (m_adView != null) {
         //    m_adView.resume();
         //}
@@ -354,18 +350,14 @@ public class MainActivity extends Activity {
         //    m_adView.pause();
         //}
         saveList(getString((R.string.key_save)), m_saveList);
-        m_savedIdiomList.clear();
-        for(int i = 0; i < m_saveList.size(); i++)
-            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
+        syncData();
         super.onPause();
         //m_soundPool.release();
     }
     @Override
     protected void onRestart() {
         m_saveList = loadList(getString(R.string.key_save));
-        m_savedIdiomList.clear();
-        for(int i = 0; i < m_saveList.size(); i++)
-            m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
+        syncData();
         super.onRestart();
     }
 
@@ -376,11 +368,40 @@ public class MainActivity extends Activity {
         //    m_adView.destroy();
         //}
         saveList(getString((R.string.key_save)), m_saveList);
+        syncData();
+        super.onDestroy();
+        setResult(RESULT_OK);
+    }
+
+    static public void syncData()
+    {
         m_savedIdiomList.clear();
         for(int i = 0; i < m_saveList.size(); i++)
             m_savedIdiomList.add(new Idiom(m_saveList.get(i)));
-        super.onDestroy();
-        setResult(RESULT_OK);
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(getString(R.string.final_title));
+            dialog.setMessage(getString(R.string.final_message));
+            dialog.setPositiveButton(getString(R.string.final_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    //moveTaskToBack(true);
+                }
+            });
+            dialog.setNegativeButton(getString(R.string.final_cancel), new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            dialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

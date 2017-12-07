@@ -87,7 +87,11 @@ public class HistoryActivity extends Activity {
                         {
                             Idiom data = MainActivity.m_savedIdiomList.get(i);
                             if(data.isTryingToDelete())
+                            {
                                 data.setEntry(false);
+                                MainActivity.m_savedIdiomList.remove(i);
+                                i--;
+                            }
                         }
                         createHistoryList();
                     }
@@ -110,9 +114,8 @@ public class HistoryActivity extends Activity {
                 {
                     Idiom idiom = (Idiom)myBaseAdapter.getItem(i);
                     idiom.setAboutToDelete(isChecked);
-                    //if(isChecked) m_deleteAllChk.setText(getString(R.string.uncheck_all));
-                    //else m_deleteAllChk.setText(getString(R.string.check_all));
                 }
+                createHistoryList();
             }
         });
         this.createHistoryList();
@@ -120,9 +123,7 @@ public class HistoryActivity extends Activity {
 
     private void createHistoryList()
     {
-        MyBaseAdapter myBaseAdapter = (MyBaseAdapter)m_historyListView.getAdapter();
         m_historyItems.clear();
-        if(myBaseAdapter != null) myBaseAdapter.refreshItemList(m_historyItems);
         m_historyCount.setVisibility(View.INVISIBLE);
         m_deleteHistoryBtn.setEnabled(false);
         m_deleteAllChk.setEnabled(false);
@@ -132,7 +133,7 @@ public class HistoryActivity extends Activity {
             if(data.getCheckCount() > 0)
                 m_historyItems.add(data);          // 取得した要素をitemsに追加
         }
-        myBaseAdapter = new MyBaseAdapter(this, m_historyItems, MyBaseAdapter.eActivity.History);
+        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(this, m_historyItems, MyBaseAdapter.eActivity.History);
         m_historyListView.setAdapter(myBaseAdapter);  // ListViewにmyBaseAdapterをセット
         myBaseAdapter.notifyDataSetChanged();   // Viewの更新
 
@@ -144,4 +145,41 @@ public class HistoryActivity extends Activity {
             m_deleteAllChk.setEnabled(true);
         }
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        //if (m_adView != null) {
+        //    m_adView.resume();
+        //}
+    }
+
+    @Override
+    public void onPause() {
+        //if (m_adView != null) {
+        //    m_adView.pause();
+        //}
+        MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
+        MainActivity.syncData();
+        super.onPause();
+        //m_soundPool.release();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        //if (m_adView != null) {
+        //    m_adView.destroy();
+        //}
+        MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
+        MainActivity.syncData();
+        super.onDestroy();
+        setResult(RESULT_OK);
+    }
+
 }

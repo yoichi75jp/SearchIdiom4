@@ -1,66 +1,66 @@
 <resources>
-    <string name="app_name">速攻！四字熟語習得</string>
+    <string name="app_name">Quick master! Yojijukugo</string>
 
     <!--共通-->
     <string name="delimiter">\@</string>
     <string name="key_save">key_save</string>
-    <string name="find_meaning">意味を調べる</string>
-    <string name="confirm_whether_to_check_meaning">この四字熟語の意味を調べますか？</string>
+    <string name="find_meaning">Check meaning</string>
+    <string name="confirm_whether_to_check_meaning">Do you examine the meaning of this four-character idiom?</string>
     <string name="ok">OK</string>
-    <string name="cancel">キャンセル</string>
+    <string name="cancel">Cancel</string>
 
     <!--テスト文字列-->
     <string name="idiom_name_test">情状酌量</string>
     <string name="idiom_read_test">じょうじょうしゃくりょう</string>
-    <string name="view_count_test">閲覧回数 : 2回</string>
+    <string name="view_count_test">View count : 2 times</string>
     <string name="last_view_day_test">last : 2017/10/28</string>
 
     <!--ListView表示文字列-->
-    <string name="check_count">閲覧回数 : %1$d 回</string>
+    <string name="check_count">View count : %1$d times</string>
     <string name="last_check_day">last : %1$s</string>
 
     <!--MainActivity-->
-    <string name="search_title">四字熟語に含まれる文字を入力してください</string>
-    <string name="search_hint">検索文字入力</string>
+    <string name="search_title">Please enter the letters included</string>
+    <string name="search_hint">Search character input</string>
 
     <string-array name="match_pattern">
-        <item>前方一致</item>
-        <item>部分一致</item>
-        <item>後方一致</item>
+        <item>Forward match</item>
+        <item>Partial Match</item>
+        <item>Backward match</item>
     </string-array>
 
-    <string name="switch_forward">前方一致</string>
-    <string name="switch_partial">部分一致</string>
-    <string name="switch_backward">後方一致</string>
+    <string name="switch_forward">Forward match</string>
+    <string name="switch_partial">Partial Match</string>
+    <string name="switch_backward">Backward match</string>
 
-    <string name="search_count">%1$d 件</string>
+    <string name="search_count">%1$d item</string>
 
     <!--メニュータイトル-->
-    <string name="menu_favorite">お気に入り</string>
-    <string name="menu_history">履歴</string>
-    <string name="menu_close">終了</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_history">History</string>
+    <string name="menu_close">Close</string>
 
     <!--メイン画面で戻るボタンを押下したときのメッセージ-->
-    <string name="final_title">終了メニュー</string>
-    <string name="final_message">アプリケーションを終了しますか？</string>
-    <string name="final_ok">終了</string>
-    <string name="final_cancel">キャンセル</string>
+    <string name="final_title">Exit menu</string>
+    <string name="final_message">Do you want to exit the application?</string>
+    <string name="final_ok">Exit</string>
+    <string name="final_cancel">Cancel</string>
 
     <!--HistoryActivity-->
-    <string name="history_description">意味を調べたことのある四字熟語の履歴</string>
-    <string name="check_all">全て選択</string>
-    <string name="uncheck_all">全て選択解除</string>
-    <string name="delete_history">履歴から削除する</string>
-    <string name="title_delete_history">履歴削除</string>
-    <string name="confirm_whether_to_delete_history">チェックしている履歴を削除しますか？</string>
+    <string name="history_description">History of list of idiom that you have studied</string>
+    <string name="check_all">Select all</string>
+    <string name="uncheck_all">Deselect all</string>
+    <string name="delete_history">Delete from history</string>
+    <string name="title_delete_history">Delete history</string>
+    <string name="confirm_whether_to_delete_history">Would you like to delete the checked history?</string>
 
     <!--FavoriteActivity-->
-    <string name="favorite_description">お気に入りリストです</string>
+    <string name="favorite_description">My favorite list</string>
 
     <!--WedBrowserActivity-->
-    <string name="look_answer">意味を確認</string>
+    <string name="look_answer">Confirm meaning</string>
 
-    <string name="search_description">Webで検索</string>
-    <string name="search_word">%1$s+意味</string>
+    <string name="search_description">Search on the Web</string>
+    <string name="search_word">%1$s+meaning</string>
 
 </resources>

@@ -116,7 +116,12 @@ public class Idiom
     void setEntry(boolean enter)
     {
         m_isEntry = enter;
-        if(!enter)  this.update();
+        if(!enter)
+        {
+            m_checkCount = 0;
+            m_lastCheckDay = null;
+            this.update();
+        }
     }
     boolean isEntry(){return m_isEntry;}
 

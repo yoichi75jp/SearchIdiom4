@@ -30,6 +30,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+//TODO: Favoriteアイコンの色変更
+//TODO: 履歴画面とお気に入り画面のソート機能（50音順と日付順）
+//TODO:
+
 public class MainActivity extends Activity {
 
     static public String m_today;
@@ -46,7 +50,6 @@ public class MainActivity extends Activity {
     static public SharedPreferences m_prefs;
     static public final String DELIMITER = "@";
 
-    private MyBaseAdapter m_myBaseAdapter;
     private List<Idiom> m_resultItems;
     static public ArrayList<String> m_saveList;
     static public ArrayList<Idiom> m_savedIdiomList;
@@ -210,9 +213,9 @@ public class MainActivity extends Activity {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        m_myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
-        m_idiomListView.setAdapter(m_myBaseAdapter);  // ListViewにmyBaseAdapterをセット
-        m_myBaseAdapter.notifyDataSetChanged();   // Viewの更新
+        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(this, m_resultItems, MyBaseAdapter.eActivity.Main);
+        m_idiomListView.setAdapter(myBaseAdapter);  // ListViewにmyBaseAdapterをセット
+        myBaseAdapter.notifyDataSetChanged();   // Viewの更新
 
         m_txtCount.setText(getString(R.string.search_count,m_resultItems.size()));
         if(m_resultItems.size() > 0)

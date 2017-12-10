@@ -27,15 +27,21 @@
                 android:id="@+id/check_delete_all"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="3"
                 android:gravity="start"
                 android:text="@string/check_all"/>
+
+            <!--Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:entries="@array/history_sort_pattern"/-->
 
             <TextView
                 android:id="@+id/history_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="3"
                 android:gravity="end"
                 android:text="@string/search_count"/>
 
@@ -66,7 +72,7 @@
                 android:text="@string/delete_history"/>
         </LinearLayout>
 
-        <!--LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,9 +82,9 @@
                 android:id="@+id/adView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adUnitId="@string/adUnitId"
+                ads:adUnitId="@string/adUnitTestId"
                 ads:adSize="BANNER" />
-        </LinearLayout-->
+        </LinearLayout>
 
     </LinearLayout>
 

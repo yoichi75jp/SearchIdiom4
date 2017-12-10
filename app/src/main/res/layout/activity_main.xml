@@ -55,15 +55,40 @@
                 android:layout_gravity="end"
                 android:text="@string/search_count"/>
 
-            <ListView
-                android:id="@+id/list_result"
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            </ListView>
+                <LinearLayout
+                    android:id="@+id/link1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/link_app1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/ic_puzzle_idiom4_mdpi"
+                        android:background="#00000000"
+                        android:layout_gravity="center"
+                        style="android:attr/buttonBarButtonStyle" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:text="@string/other_apps_link1"/>
+                </LinearLayout>
+                <ListView
+                    android:id="@+id/list_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
+            </FrameLayout>
+
         </LinearLayout>
 
-        <!--LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -75,10 +100,10 @@
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adUnitId="@string/adUnitId"
+                ads:adUnitId="@string/adUnitTestId"
                 ads:adSize="BANNER" />
 
-        </LinearLayout-->
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

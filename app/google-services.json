@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "629033616956",
+    "project_id": "quick-master-yojijukugo7000"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629033616956:android:a9bbbfcb4eb07163",
+        "android_client_info": {
+          "package_name": "com.aufthesis.searchidiom4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629033616956-2jqc8aevafvt8l2dqf30rku9ku9nfujg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHC6R20L5EnonCKBbNRgRw8TAsD5PDlMs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-64731121-11"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

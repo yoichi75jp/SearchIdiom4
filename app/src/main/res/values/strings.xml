@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">Quick master! Yojijukugo</string>
+    <string name="app_name">Quick master! Yojijukugo 7000</string>
 
     <!--共通-->
     <string name="delimiter">\@</string>
     <string name="key_save">key_save</string>
+    <string name="key_match_pattern">key_match_pattern</string>
     <string name="find_meaning">Check meaning</string>
     <string name="confirm_whether_to_check_meaning">Do you examine the meaning of this four-character idiom?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="copied">%1$s copied to clipboard</string>
 
     <!--テスト文字列-->
     <string name="idiom_name_test">情状酌量</string>
@@ -22,6 +24,7 @@
     <!--MainActivity-->
     <string name="search_title">Please enter the letters included</string>
     <string name="search_hint">Search character input</string>
+    <string name="other_apps_link1">After learn a lot of idioms and let\'s enjoy yourself with this app (tap to icon) to check your skills!</string>
 
     <string-array name="match_pattern">
         <item>Forward match</item>
@@ -38,6 +41,7 @@
     <!--メニュータイトル-->
     <string name="menu_favorite">Favorite</string>
     <string name="menu_history">History</string>
+    <string name="menu_apps">Apps</string>
     <string name="menu_close">Close</string>
 
     <!--メイン画面で戻るボタンを押下したときのメッセージ-->
@@ -54,6 +58,13 @@
     <string name="title_delete_history">Delete history</string>
     <string name="confirm_whether_to_delete_history">Would you like to delete the checked history?</string>
 
+    <string-array name="history_sort_pattern">
+        <item>Descending order by date</item>
+        <item>Ascending order by date</item>
+        <item>Ascending order by keyword</item>
+        <item>Descending order by keyword</item>
+    </string-array>
+
     <!--FavoriteActivity-->
     <string name="favorite_description">My favorite list</string>
 
@@ -63,4 +74,8 @@
     <string name="search_description">Search on the Web</string>
     <string name="search_word">%1$s+meaning</string>
 
+    <!--ca-app-pub-1485554329820885~1731985973-->
+    <string name="adUnitId">ca-app-pub-1485554329820885/2989351030</string>
+    <string name="adUnitInterId">ca-app-pub-1485554329820885/1181445346</string>
+    <string name="adUnitTestId">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

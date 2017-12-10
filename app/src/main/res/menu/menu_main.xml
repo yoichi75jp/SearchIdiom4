@@ -15,10 +15,16 @@
         android:showAsAction="ifRoom"
         android:title="@string/menu_history"/>
 
+    <!--item
+        android:id="@+id/apps"
+        android:icon="@drawable/ic_android_white_24dp"
+        android:orderInCategory="300"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_apps"/-->
     <item
         android:id="@+id/close"
         android:icon="@drawable/ic_close_white_24dp"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:showAsAction="ifRoom"
         android:title="@string/menu_close"/>
 </menu>

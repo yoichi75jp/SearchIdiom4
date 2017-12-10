@@ -7,14 +7,21 @@ package com.aufthesis.searchidiom4;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +30,7 @@ public class FavoriteActivity extends Activity {
 
     private ListView m_favoriteListView;
     private TextView m_favoriteCount;
+    private AdView m_adView;
 
     private Context m_context;
     private List<Idiom> m_favoriteItems;
@@ -65,7 +73,29 @@ public class FavoriteActivity extends Activity {
                 dialog.show();
             }
         });
+        m_favoriteListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Idiom idiom = m_favoriteItems.get(position);
+
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                // Creates a new text clip to put on the clipboard
+                ClipData clip = ClipData.newPlainText("idiom",idiom.getName());
+                clipboard.setPrimaryClip(clip);
+
+                Toast toast = Toast.makeText(m_context, getString(R.string.copied, idiom.getName()),Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;
+            }
+        });
         this.createFavoriteList();
+
+        //バナー広告
+        m_adView = findViewById(R.id.adView1);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        if(!MainActivity.g_isDebug)
+            m_adView.loadAd(adRequest);
     }
 
     private void createFavoriteList()
@@ -93,16 +123,16 @@ public class FavoriteActivity extends Activity {
     public void onResume()
     {
         super.onResume();
-        //if (m_adView != null) {
-        //    m_adView.resume();
-        //}
+        if (m_adView != null) {
+            m_adView.resume();
+        }
     }
 
     @Override
     public void onPause() {
-        //if (m_adView != null) {
-        //    m_adView.pause();
-        //}
+        if (m_adView != null) {
+            m_adView.pause();
+        }
         MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
         MainActivity.syncData();
         super.onPause();
@@ -116,9 +146,9 @@ public class FavoriteActivity extends Activity {
     @Override
     public void onDestroy()
     {
-        //if (m_adView != null) {
-        //    m_adView.destroy();
-        //}
+        if (m_adView != null) {
+            m_adView.destroy();
+        }
         MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
         MainActivity.syncData();
         super.onDestroy();

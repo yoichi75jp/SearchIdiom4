@@ -3,10 +3,15 @@ package com.aufthesis.searchidiom4;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,6 +19,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +37,7 @@ public class HistoryActivity extends Activity {
     private TextView m_historyCount;
     private Button m_deleteHistoryBtn;
     private CheckBox m_deleteAllChk;
+    private AdView m_adView;
 
     private Context m_context;
     private List<Idiom> m_historyItems;
@@ -69,6 +79,22 @@ public class HistoryActivity extends Activity {
                 // ダイアログの表示
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+        m_historyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Idiom idiom = m_historyItems.get(position);
+
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                // Creates a new text clip to put on the clipboard
+                ClipData clip = ClipData.newPlainText("idiom",idiom.getName());
+                clipboard.setPrimaryClip(clip);
+
+                Toast toast = Toast.makeText(m_context, getString(R.string.copied, idiom.getName()),Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;
             }
         });
         m_deleteHistoryBtn = findViewById(R.id.delete_history);
@@ -119,6 +145,12 @@ public class HistoryActivity extends Activity {
             }
         });
         this.createHistoryList();
+
+        //バナー広告
+        m_adView = findViewById(R.id.adView2);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        if(!MainActivity.g_isDebug)
+            m_adView.loadAd(adRequest);
     }
 
     private void createHistoryList()
@@ -150,16 +182,16 @@ public class HistoryActivity extends Activity {
     public void onResume()
     {
         super.onResume();
-        //if (m_adView != null) {
-        //    m_adView.resume();
-        //}
+        if (m_adView != null) {
+            m_adView.resume();
+        }
     }
 
     @Override
     public void onPause() {
-        //if (m_adView != null) {
-        //    m_adView.pause();
-        //}
+        if (m_adView != null) {
+            m_adView.pause();
+        }
         MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
         MainActivity.syncData();
         super.onPause();
@@ -173,9 +205,9 @@ public class HistoryActivity extends Activity {
     @Override
     public void onDestroy()
     {
-        //if (m_adView != null) {
-        //    m_adView.destroy();
-        //}
+        if (m_adView != null) {
+            m_adView.destroy();
+        }
         MainActivity.saveList(getString((R.string.key_save)), MainActivity.m_saveList);
         MainActivity.syncData();
         super.onDestroy();

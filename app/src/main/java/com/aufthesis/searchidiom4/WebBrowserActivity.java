@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 /*
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -22,7 +25,7 @@ import com.google.android.gms.ads.AdView;
 public class WebBrowserActivity extends Activity {
 
     private WebView  m_webView;
-    //private AdView m_adView;
+    private AdView m_adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +50,12 @@ public class WebBrowserActivity extends Activity {
         String query = intent.getExtras().getString(SearchManager.QUERY);
         String url = "https://www.google.co.jp/search?q=" + query;
         m_webView.loadUrl(url);
-        /*
+
         //バナー広告
-        m_adView = findViewById(R.id.adView2);
+        m_adView = findViewById(R.id.adView3);
         AdRequest adRequest = new AdRequest.Builder().build();
         if(!MainActivity.g_isDebug)
             m_adView.loadAd(adRequest);
-        **/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,17 +96,17 @@ public class WebBrowserActivity extends Activity {
     @Override
     public void onResume()
     {
-        super.onResume();/*
+        super.onResume();
         if (m_adView != null) {
             m_adView.resume();
-        }**/
+        }
     }
 
     @Override
-    public void onPause() {/*
+    public void onPause() {
         if (m_adView != null) {
             m_adView.pause();
-        }**/
+        }
         super.onPause();
     }
     @Override
@@ -114,10 +116,10 @@ public class WebBrowserActivity extends Activity {
 
     @Override
     public void onDestroy()
-    {/*
+    {
         if (m_adView != null) {
             m_adView.destroy();
-        }**/
+        }
         super.onDestroy();
         setResult(RESULT_OK);
     }

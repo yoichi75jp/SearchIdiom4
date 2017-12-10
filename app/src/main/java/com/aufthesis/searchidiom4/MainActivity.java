@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
+import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,16 +14,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import org.json.JSONArray;
 
@@ -30,11 +41,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-//TODO: Favoriteアイコンの色変更
 //TODO: 履歴画面とお気に入り画面のソート機能（50音順と日付順）
-//TODO:
+//TODO: アプリ起動またはマーケット移動
 
 public class MainActivity extends Activity {
+
+    //debug時はこの値をtrueに設定
+    static public boolean g_isDebug = false;
 
     static public String m_today;
     private String m_query = "";
@@ -43,6 +56,8 @@ public class MainActivity extends Activity {
     private SearchView m_searchView;
     private ListView m_idiomListView;
     private TextView m_txtCount;
+    private AdView m_adView;
+    private LinearLayout m_linkLayout;
 
     static public SQLiteDatabase m_db;
     private Context m_context;
@@ -82,6 +97,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Idiom idiom = m_resultItems.get(position);
 
+                m_searchView.clearFocus();
                 AlertDialog.Builder builder = new AlertDialog.Builder(m_context);
                 builder.setTitle(getString(R.string.find_meaning));
                 builder.setMessage(getString(R.string.confirm_whether_to_check_meaning));
@@ -103,6 +119,23 @@ public class MainActivity extends Activity {
                 // ダイアログの表示
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+        m_idiomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Idiom idiom = m_resultItems.get(position);
+
+                m_searchView.clearFocus();
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                // Creates a new text clip to put on the clipboard
+                ClipData clip = ClipData.newPlainText("idiom",idiom.getName());
+                clipboard.setPrimaryClip(clip);
+
+                Toast toast = Toast.makeText(m_context, getString(R.string.copied, idiom.getName()),Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;
             }
         });
 
@@ -135,13 +168,39 @@ public class MainActivity extends Activity {
         m_patternSelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                m_searchView.clearFocus();
                 searchIdiom(m_query);
+                SharedPreferences.Editor editor = m_prefs.edit();
+                editor.putInt(getString(R.string.key_match_pattern), position);
+                editor.apply();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        m_patternSelectSpinner.setSelection(m_prefs.getInt(getString(R.string.key_match_pattern), 0));
+
+        m_linkLayout = findViewById(R.id.link1);
+        Button linkBtn1 = findViewById(R.id.link_app1);
+        linkBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("intent://test/#Intent;scheme=characteridiomatic4;package=com.aufthesis.characteridiomatic4;category=android.intent.category.BROWSABLE;action=android.intent.action.VIEW;end;");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                }
+                catch (ActivityNotFoundException activityNotFound) {}
+            }
+        });
+
+        //バナー広告
+        m_adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        if(!g_isDebug)
+            m_adView.loadAd(adRequest);
     }
 
     private void searchIdiom(String query)
@@ -149,6 +208,7 @@ public class MainActivity extends Activity {
         //ArrayAdapterに対してListViewのリスト(items)の更新
         m_resultItems.clear();
         m_txtCount.setVisibility(View.INVISIBLE);
+        m_linkLayout.setVisibility(View.VISIBLE);
         if(query.equals("")) query = "@@@";     //検索結果が0件になるように適当な文字列(@@@)を格納
 
         String lang = "\"read-en\"";
@@ -219,7 +279,11 @@ public class MainActivity extends Activity {
 
         m_txtCount.setText(getString(R.string.search_count,m_resultItems.size()));
         if(m_resultItems.size() > 0)
+        {
             m_txtCount.setVisibility(View.VISIBLE);
+            m_linkLayout.setVisibility(View.INVISIBLE);
+        }
+
     }
 
 
@@ -316,6 +380,17 @@ public class MainActivity extends Activity {
             overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
             return true;
         }
+        /*
+        if(id == R.id.apps)
+        {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            int requestCode = 3;
+            startActivityForResult(intent, requestCode);
+            //startActivity(intent);
+            // アニメーションの設定
+            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+            return true;
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -342,16 +417,16 @@ public class MainActivity extends Activity {
         super.onResume();
         m_saveList = loadList(getString(R.string.key_save));
         syncData();
-        //if (m_adView != null) {
-        //    m_adView.resume();
-        //}
+        if (m_adView != null) {
+            m_adView.resume();
+        }
     }
 
     @Override
     public void onPause() {
-        //if (m_adView != null) {
-        //    m_adView.pause();
-        //}
+        if (m_adView != null) {
+            m_adView.pause();
+        }
         saveList(getString((R.string.key_save)), m_saveList);
         syncData();
         super.onPause();
@@ -367,9 +442,9 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy()
     {
-        //if (m_adView != null) {
-        //    m_adView.destroy();
-        //}
+        if (m_adView != null) {
+            m_adView.destroy();
+        }
         saveList(getString((R.string.key_save)), m_saveList);
         syncData();
         super.onDestroy();

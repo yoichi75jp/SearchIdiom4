@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">速攻習得！四字熟語</string>
+    <string name="app_name">速攻習得！四字熟語7000</string>
 
     <!--共通-->
     <string name="delimiter">\@</string>
     <string name="key_save">key_save</string>
+    <string name="key_match_pattern">key_match_pattern</string>
     <string name="find_meaning">意味を調べる</string>
     <string name="confirm_whether_to_check_meaning">この四字熟語の意味を調べますか？</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
+    <string name="copied">%1$sをクリップボードにコピーしました</string>
 
     <!--テスト文字列-->
     <string name="idiom_name_test">情状酌量</string>
@@ -22,6 +24,7 @@
     <!--MainActivity-->
     <string name="search_title">四字熟語に含まれる文字を入力してください</string>
     <string name="search_hint">検索文字入力</string>
+    <string name="other_apps_link1">たくさん四字熟語を覚えたら\n「究極の四字熟語」\nで楽しく実力を確認してみよう！</string>
 
     <string-array name="match_pattern">
         <item>前方一致</item>
@@ -38,6 +41,7 @@
     <!--メニュータイトル-->
     <string name="menu_favorite">お気に入り</string>
     <string name="menu_history">履歴</string>
+    <string name="menu_apps">他のアプリ</string>
     <string name="menu_close">終了</string>
 
     <!--メイン画面で戻るボタンを押下したときのメッセージ-->
@@ -54,6 +58,13 @@
     <string name="title_delete_history">履歴削除</string>
     <string name="confirm_whether_to_delete_history">チェックしている履歴を削除しますか？</string>
 
+    <string-array name="history_sort_pattern">
+        <item>日付が古い順</item>
+        <item>日付が新しい順</item>
+        <item>５０音昇順（あ→ん）</item>
+        <item>５０音降順（ん→あ）</item>
+    </string-array>
+
     <!--FavoriteActivity-->
     <string name="favorite_description">お気に入りリストです</string>
 
@@ -63,4 +74,8 @@
     <string name="search_description">Webで検索</string>
     <string name="search_word">%1$s+意味</string>
 
+    <!--ca-app-pub-1485554329820885~1731985973-->
+    <string name="adUnitId">ca-app-pub-1485554329820885/2989351030</string>
+    <string name="adUnitInterId">ca-app-pub-1485554329820885/1181445346</string>
+    <string name="adUnitTestId">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

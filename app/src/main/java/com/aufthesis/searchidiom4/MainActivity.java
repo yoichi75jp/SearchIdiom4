@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Locale;
 
 //TODO: 履歴画面とお気に入り画面のソート機能（50音順と日付順）
-//TODO: アプリ起動またはマーケット移動
 
 public class MainActivity extends Activity {
 
@@ -192,7 +191,11 @@ public class MainActivity extends Activity {
                 try {
                     startActivity(intent);
                 }
-                catch (ActivityNotFoundException activityNotFound) {}
+                catch (ActivityNotFoundException activityNotFound)
+                {
+                    intent.setData(Uri.parse("market://details?id=com.aufthesis.characteridiomatic4"));
+                    startActivity(intent);
+                }
             }
         });
 

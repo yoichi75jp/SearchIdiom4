@@ -63,21 +63,34 @@
                     android:id="@+id/link1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/link_app1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_puzzle_idiom4_mdpi"
-                        android:background="#00000000"
-                        android:layout_gravity="center"
-                        style="android:attr/buttonBarButtonStyle" />
-                    <TextView
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:text="@string/other_apps_link1"/>
+                        android:layout_gravity="bottom"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/link_app1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@drawable/ic_puzzle_idiom4_mdpi"
+                            android:background="#00000000"
+                            android:layout_gravity="center"
+                            style="android:attr/buttonBarButtonStyle" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="top"
+                            android:text="@string/other_apps_link1"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="↑Click"/>
                 </LinearLayout>
                 <ListView
                     android:id="@+id/list_result"

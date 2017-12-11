@@ -25,6 +25,7 @@
     <string name="search_title">四字熟語に含まれる文字を入力してください</string>
     <string name="search_hint">検索文字入力</string>
     <string name="other_apps_link1">たくさん四字熟語を覚えたら\n「究極の四字熟語」\nで楽しく実力を確認してみよう！</string>
+    <string name="click">↑Click</string>
 
     <string-array name="match_pattern">
         <item>前方一致</item>

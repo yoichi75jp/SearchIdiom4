@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
         linkBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("intent://test/#Intent;scheme=characteridiomatic4;package=com.aufthesis.characteridiomatic4;category=android.intent.category.BROWSABLE;action=android.intent.action.VIEW;end;");
+                Uri uri = Uri.parse("characteridiomatic4://main?id=com.aufthesis.characteridiomatic4");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 try {
                     startActivity(intent);

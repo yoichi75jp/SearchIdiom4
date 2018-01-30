@@ -173,8 +173,15 @@ public class HistoryActivity extends Activity {
         if(m_historyItems.size() > 0)
         {
             m_historyCount.setVisibility(View.VISIBLE);
-            m_deleteHistoryBtn.setEnabled(true);
             m_deleteAllChk.setEnabled(true);
+            for(int i = 0; i < m_historyItems.size(); i++)
+            {
+                if(m_historyItems.get(i).isTryingToDelete())
+                {
+                    m_deleteHistoryBtn.setEnabled(true);
+                    break;
+                }
+            }
         }
     }
 

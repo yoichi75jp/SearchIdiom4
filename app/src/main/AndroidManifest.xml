@@ -30,7 +30,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="myapp" android:host="/" />
+                <data android:scheme="searchidiom4" android:host="main" />
             </intent-filter>
             <meta-data android:name="android.app.default_searchable"
                 android:value=".MainActivity" />

@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -199,6 +201,20 @@ public class MainActivity extends Activity {
             }
         });
 
+        TextView version = findViewById(R.id.version);
+        try
+        {
+            String sPackageName = getPackageName();
+            PackageManager packageManager = getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(sPackageName, 0);
+            String sVersionName = packageInfo.versionName;
+
+            version.setText(getString(R.string.version, sVersionName));
+        }
+        catch(Exception e)
+        {
+            version.setText("");
+        }
         //バナー広告
         m_adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();

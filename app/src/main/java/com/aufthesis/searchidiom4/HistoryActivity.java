@@ -35,12 +35,12 @@ public class HistoryActivity extends Activity {
 
     private ListView m_historyListView;
     private TextView m_historyCount;
-    private Button m_deleteHistoryBtn;
+    static private Button m_deleteHistoryBtn;
     private CheckBox m_deleteAllChk;
     private AdView m_adView;
 
     private Context m_context;
-    private List<Idiom> m_historyItems;
+    static private List<Idiom> m_historyItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +219,23 @@ public class HistoryActivity extends Activity {
         MainActivity.syncData();
         super.onDestroy();
         setResult(RESULT_OK);
+    }
+
+    static public void setEnableDeleteButton()
+    {
+        if(m_historyItems.size() > 0)
+        {
+            boolean isEnable = false;
+            for(int i = 0; i < m_historyItems.size(); i++)
+            {
+                if(m_historyItems.get(i).isTryingToDelete())
+                {
+                    isEnable = true;
+                    break;
+                }
+            }
+            m_deleteHistoryBtn.setEnabled(isEnable);
+        }
     }
 
 }

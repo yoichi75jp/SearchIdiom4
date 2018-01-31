@@ -43,7 +43,7 @@
                 android:id="@+id/adView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adUnitId="@string/adUnitTestId"
+                ads:adUnitId="@string/adUnitId"
                 ads:adSize="BANNER" />
         </LinearLayout>
 

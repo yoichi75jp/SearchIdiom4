@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="↑Click"/>
+                        android:text="@string/click"/>
                 </LinearLayout>
                 <ListView
                     android:id="@+id/list_result"
@@ -98,6 +98,15 @@
                     android:layout_height="wrap_content">
                 </ListView>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_gravity="end"
+                android:layout_margin="5dp"
+                android:text="@string/version"/>
 
         </LinearLayout>
 
@@ -113,7 +122,7 @@
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adUnitId="@string/adUnitTestId"
+                ads:adUnitId="@string/adUnitId"
                 ads:adSize="BANNER" />
 
         </LinearLayout>

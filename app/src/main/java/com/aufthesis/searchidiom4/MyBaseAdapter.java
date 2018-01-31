@@ -159,6 +159,7 @@ public class MyBaseAdapter extends BaseAdapter {//implements CompoundButton.OnCh
                 public void onClick(View v) {
                     boolean isChecked = ((CheckBox) v).isChecked();
                     idiomData.setAboutToDelete(isChecked);
+                    HistoryActivity.setEnableDeleteButton();
                 }
             });
         }

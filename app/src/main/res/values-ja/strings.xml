@@ -26,6 +26,8 @@
     <string name="search_hint">検索文字入力</string>
     <string name="other_apps_link1">たくさん四字熟語を覚えたら\n「究極の四字熟語」\nで実力を確認してみよう！</string>
     <string name="click">↑Click</string>
+    <string name="version">Ver.%1$s</string>
+
 
     <string-array name="match_pattern">
         <item>前方一致</item>

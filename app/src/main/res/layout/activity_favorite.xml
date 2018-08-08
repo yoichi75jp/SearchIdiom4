@@ -2,8 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +22,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="end"
+            android:paddingStart="16pt"
+            android:paddingEnd="16pt"
             android:gravity="bottom"
             android:text="@string/search_count"/>
 
@@ -30,6 +31,8 @@
             android:id="@+id/list_favorite"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingStart="16pt"
+            android:paddingEnd="16pt"
             android:layout_weight="7">
         </ListView>
 
@@ -44,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 ads:adUnitId="@string/adUnitId"
-                ads:adSize="BANNER" />
+                ads:adSize="SMART_BANNER" />
         </LinearLayout>
 
     </LinearLayout>
